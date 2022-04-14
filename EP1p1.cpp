@@ -7,66 +7,66 @@ using namespace std;
     f(x) = exp(x) - 2x^2
 */
 
-//avalia se g(x) e g'(x) são continuas
-bool continua(){ 
-    return true;
-}
-
-//avalia se o módulo de g'(x) <= k < 1
-bool modulo(){ 
-    //usar como argumento um ponteiro para o intervalo de x0
-    return true;
-}
-
-//verifica se a g(x) converge
-bool convergencia(){ //receber a função g(x)??
-    if(continua() && modulo()) return true;
-    else return false;
-}
-
 //verifica se |xk+1 - xk| < E1
-bool erroi(double ei){
-    return true;
+bool erroi(double xki, double xk, double ei){
+    if((xki-xk) < ei) return true;
+    return false;
 }
 
 //verifica se |f(xk+1)| < E2
-bool erroii(double eii){
-    return true;
+bool erroii(double xki, double eii){
+    double f = exp(xki) - 2*pow(xki, 2);
+    if(f < eii) return true;
+    return false;
+}
+
+//funções g(x) encontradas
+double gi(double x){
+    double gi = log(2*pow(x, 2));
+    return gi;
+}
+
+double gii(double x){
+    double gii = sqrt(exp(x)/2);
+    return gii;
+}
+
+double giii(double x){
+    double giii = -sqrt(exp(x)/2);
+    return giii;
 }
 
 //recebe os valores dos erros e de x0 do usuário
-void recebe(double ei, double eii, double xo, double intervalo){
+void recebe(double *ei, double *eii, double *xo, double *intervalo){
     cout<< "Insira o E1 (erro 1)\n";
-    cin>> ei;
+    cin>> *ei;
     cout<< "Insira o E2 (erro 2)\n";
-    cin>> eii;
-    cout<< "Insira o valor de x0 no intervalo x0 > " << intervalo << "\n";
-    cin>> xo;
-    while(xo < intervalo){
+    cin>> *eii;
+    cout<< "Insira o valor de x0 no intervalo x0 > " << *intervalo << "\n";
+    cin>> *xo;
+    while(*xo < *intervalo){
         cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervalo << "\n";
-        cin>> xo;
+        cin>> *xo;
     }
     return;
 }
 
 main(){
-    double gi, gii, giii;
-    double x, xo;
+    double gi, gii, giii; 
     double ei, eii;
+    double xo;
+    
+    double xki, xk;
     double intervalo = 0.02; //só pra testar
 
-    //funções g(x) encontradas
-    gi = log(2*pow(x, 2));
-    gii = sqrt(exp(x)/2);
-    giii = -sqrt(exp(x)/2);
+    recebe(&ei, &eii, &xo, &intervalo); //recebe parametros do usuario
 
-    //se converge o usuario digita os valores dos erros
-    if(convergencia()){ //receber as 3 funções g(x)
-        recebe(ei, eii, xo, intervalo);
-        //iterar para achar x1, x2...
-        if(erroi(ei) || erroii(eii)){
-            //encontrou uma raiz
-        }
-    }
+    //iterar para achar x1, x2...
+    do{
+        //tentar achar o xk
+    } while(erroi(xki, xk, ei) || erroii(xki, eii));
+
+    
+
 }
 
