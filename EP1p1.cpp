@@ -57,20 +57,21 @@ double iteracaogiii(double xk, double ei, double eii){
 
 //recebe os valores dos erros e de x0 do usuário
 void recebe(double *ei, double *eii, double *xo, double *intervalo){
-    cout<< "Insira o E1 (erro 1)\n";
+    cout<< "Insira o E1 (erro 1):\n";
     cin>> *ei;
-    cout<< "Insira o E2 (erro 2)\n";
+    cout<< "Insira o E2 (erro 2):\n";
     cin>> *eii;
-    cout<< "Insira o valor de x0 no intervalo x0 > " << *intervalo << "\n";
+    cout<< "Insira o valor de x0 no intervalo x0 > " << *intervalo << ":\n";
     cin>> *xo;
     while(*xo < *intervalo){
-        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervalo << "\n";
+        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervalo << ":\n";
         cin>> *xo;
     }
     return;
 }
 
-main(){
+void partei(){
+    cout<< "Parte 1: Metodo de ponto fixo\nAlgoritmo que utiliza o metodo do ponto fixo para encontrar as 3 raizes da funcao f(x) = exp(x) - 2x^2.\n";
     double gi, gii, giii; 
     double ei, eii;
     double xo;
@@ -86,6 +87,9 @@ main(){
     cout<< "raiz 2: " <<resultii << "\n";
     double resultiii = iteracaogiii(xo, ei, eii);
     cout<< "raiz 3: " <<resultiii << "\n";
+}
 
+main(){
+    partei();
 }
 
