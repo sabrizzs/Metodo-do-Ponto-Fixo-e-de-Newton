@@ -65,7 +65,7 @@ main(){
         recebe(ei, eii, xo, intervalo);
         //iterar para achar x1, x2...
         if(erroi() || erroii()){
-            //encontrou um critério de parada
+            //encontrou uma raiz
         }
     }
 }
