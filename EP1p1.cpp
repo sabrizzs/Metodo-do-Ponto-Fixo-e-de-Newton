@@ -7,16 +7,52 @@ using namespace std;
     f(x) = exp(x) - 2x^2
 */
 
+//avalia se g(x) e g'(x) são continuas
+bool continua(){ 
+    return true;
+}
 
+//avalia se o módulo de g'(x) <= k < 1
+bool modulo(){ 
+    //usar como argumento um ponteiro para o intervalo de x0
+    return true;
+}
+
+//verifica se a g(x) converge
+bool convergencia(){ //receber a função g(x)??
+    if(continua() && modulo()) return true;
+    else return false;
+}
+
+//recebe os valores dos erros e de x0 do usuário
+void recebe(double ei, double eii, double xo, double intervalo){
+    cout<< "Insira o E1 (erro 1)\n";
+    cin>> ei;
+    cout<< "Insira o E2 (erro 2)\n";
+    cin>> eii;
+    cout<< "Insira o valor de x0 no intervalo x0 > " << intervalo << "\n";
+    cin>> xo;
+    while(xo < intervalo){
+        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervalo << "\n";
+        cin>> xo;
+    }
+    return;
+}
 
 main(){
-double gi, gii, giii;
-double x;
+    double gi, gii, giii;
+    double x, xo;
+    double ei, eii;
+    double intervalo = 0.02;
 
-//funções g(x) encontradas
-gi = log(2*pow(x, 2));
-gii = sqrt(exp(x)/2);
-giii = -sqrt(exp(x)/2);
+    //funções g(x) encontradas
+    gi = log(2*pow(x, 2));
+    gii = sqrt(exp(x)/2);
+    giii = -sqrt(exp(x)/2);
 
+    //se converge o usuario digita os valores dos erros
+    if(convergencia()){ 
+        recebe(ei, eii, xo, intervalo);
+    }
 }
 
