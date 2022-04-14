@@ -25,12 +25,12 @@ bool convergencia(){ //receber a função g(x)??
 }
 
 //verifica se |xk+1 - xk| < E1
-bool erroi(){
+bool erroi(double ei){
     return true;
 }
 
 //verifica se |f(xk+1)| < E2
-bool erroii(){
+bool erroii(double eii){
     return true;
 }
 
@@ -64,7 +64,7 @@ main(){
     if(convergencia()){ //receber as 3 funções g(x)
         recebe(ei, eii, xo, intervalo);
         //iterar para achar x1, x2...
-        if(erroi() || erroii()){
+        if(erroi(ei) || erroii(eii)){
             //encontrou uma raiz
         }
     }
