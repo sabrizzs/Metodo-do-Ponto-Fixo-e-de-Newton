@@ -24,6 +24,16 @@ bool convergencia(){ //receber a função g(x)??
     else return false;
 }
 
+//verifica se |xk+1 - xk| < E1
+bool erroi(){
+    return true;
+}
+
+//verifica se |f(xk+1)| < E2
+bool erroii(){
+    return true;
+}
+
 //recebe os valores dos erros e de x0 do usuário
 void recebe(double ei, double eii, double xo, double intervalo){
     cout<< "Insira o E1 (erro 1)\n";
@@ -43,7 +53,7 @@ main(){
     double gi, gii, giii;
     double x, xo;
     double ei, eii;
-    double intervalo = 0.02;
+    double intervalo = 0.02; //só pra testar
 
     //funções g(x) encontradas
     gi = log(2*pow(x, 2));
@@ -51,8 +61,12 @@ main(){
     giii = -sqrt(exp(x)/2);
 
     //se converge o usuario digita os valores dos erros
-    if(convergencia()){ 
+    if(convergencia()){ //receber as 3 funções g(x)
         recebe(ei, eii, xo, intervalo);
+        //iterar para achar x1, x2...
+        if(erroi() || erroii()){
+            //encontrou um critério de parada
+        }
     }
 }
 
