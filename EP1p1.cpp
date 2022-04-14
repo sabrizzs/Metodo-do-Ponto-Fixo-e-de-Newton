@@ -9,13 +9,13 @@ using namespace std;
 
 //verifica se |xk+1 - xk| < E1
 bool erroi(double xki, double xk, double ei){
-    if((xki-xk) < ei) return true;
+    if(fabs(xki-xk) < ei) return true;
     return false;
 }
 
 //verifica se |f(xk+1)| < E2
 bool erroii(double xki, double eii){
-    double f = exp(xki) - 2*pow(xki, 2);
+    double f = fabs(exp(xki) - 2*pow(xki, 2));
     if(f < eii) return true;
     return false;
 }
@@ -34,6 +34,25 @@ double gii(double x){
 double giii(double x){
     double giii = -sqrt(exp(x)/2);
     return giii;
+}
+
+//funções recursivas para achar as raizes das funções g(x)
+double iteracaogi(double xk, double ei, double eii){
+    double xki = gi(xk);
+    if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
+    return iteracaogi(xki, ei, eii);
+}
+
+double iteracaogii(double xk, double ei, double eii){
+    double xki = gii(xk);
+    if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
+    return iteracaogii(xki, ei, eii);
+}
+
+double iteracaogiii(double xk, double ei, double eii){
+    double xki = giii(xk);
+    if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
+    return iteracaogiii(xki, ei, eii);
 }
 
 //recebe os valores dos erros e de x0 do usuário
@@ -55,18 +74,18 @@ main(){
     double gi, gii, giii; 
     double ei, eii;
     double xo;
-    
-    double xki, xk;
-    double intervalo = 0.02; //só pra testar
+    //temos que calcular o intervalo para cada g(x)
+    double intervalo = 0.02; 
 
     recebe(&ei, &eii, &xo, &intervalo); //recebe parametros do usuario
 
-    //iterar para achar x1, x2...
-    do{
-        //tentar achar o xk
-    } while(erroi(xki, xk, ei) || erroii(xki, eii));
-
-    
+    //iteração para achar xk
+    double resulti = iteracaogi(xo, ei, eii);
+    cout<< "raiz 1: " <<resulti << "\n";
+    double resultii = iteracaogii(xo, ei, eii);
+    cout<< "raiz 2: " <<resultii << "\n";
+    double resultiii = iteracaogiii(xo, ei, eii);
+    cout<< "raiz 3: " <<resultiii << "\n";
 
 }
 
