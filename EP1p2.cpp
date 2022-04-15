@@ -7,27 +7,30 @@ using namespace std;
     Algoritmo que gera uma imagem que ilustra as bacias de convergência de uma função.
 */
 
-//ponteiro para uma funcao double que aceita double como parametro
-typedef double (*fct_ptr)(double);
+//ponteiro para uma funcao double que aceita double e int como parametro
+typedef double (*fct_ptr)(double, int);
 
-//funcao 1 = x^6-1
-double funcaoi(double x){
-    return pow(x, 6) - 1;
+//funcao I = x^6-1
+double funcaoi(double x, int param){
+    // se param == 0 calcula a funcao, se != 0 calcula a derivada
+    if(param) return 6*pow(x, 5);
+    else return pow(x, 6) - 1; 
 }
 
-//funcao 2 = x^3 - 2
-double funcaoii(double x){
-    return pow(x, 3) - 2; 
+//funcao II = x^3 - 2
+double funcaoii(double x, int param){
+    if(param) return 2*pow(x, 2);
+    else return pow(x, 3) - 2;
 }
 
 //calcula o valor da função f aplicada em x
 double evalf(double x, fct_ptr funcao){
-    return funcao(x);
+    return funcao(x, 0);
 }
 
 //calcula o valor da derivada da função f aplicada em x
-void evalDf(double x){
-    return;
+double evalDf(double x, fct_ptr funcao){
+    return funcao(x, 1);
 }
 
 //acha as bacias de convergência da função f no domínio [l1, u1]x[l2, u2] e gera um arquivo output.txt que contém os dados para a geração da imagem das bacias
@@ -46,10 +49,9 @@ void parteii(){
 
 int main(){
     parteii();
-    double result = evalf(2, funcaoi);
-    cout<< "teste\n";
-    cout<< result << "\n";
-    cout<< evalf(2, funcaoii) << " teste 2\n";
+
+    cout<< "Funcao I com x = 2\n" << evalf(2, funcaoi) << "\n";
+    cout<< "Derivada da funcao I com x = 2\n" << evalDf(2, funcaoi) << "\n";
 
     return 0;
 }
