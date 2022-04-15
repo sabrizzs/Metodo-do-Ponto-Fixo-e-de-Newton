@@ -22,7 +22,7 @@ double funcaoii(double x, int param){
     if(param) return 2*pow(x, 2);
     else return pow(x, 3) - 2;
 }
-
+ //funcao III = x^3 - 7
 double funcaoiii(double x, int param){
     if(param) return 3*pow(x, 2);
     else return pow(x, 3)-7;
