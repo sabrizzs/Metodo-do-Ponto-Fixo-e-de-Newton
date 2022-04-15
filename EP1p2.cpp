@@ -39,19 +39,19 @@ void newton_basis(double l, double u, double p){
 }
 
 //aplica o método de Newton para achar uma raiz da função f (com primeira derivada f0), partindo do ponto x0.
-void newton(double xo){
-    return;
+double newton(double xo){
+    double raiz;
+    return raiz;
 }
 
 void parteii(){
+    //testes
+    cout<< "Funcao I com x = 2\n" << evalf(2, funcaoi) << "\n";
+    cout<< "Derivada da funcao I com x = 2\n" << evalDf(2, funcaoi) << "\n";
     return;
 }
 
-int main(){
+void main(){
     parteii();
-
-    cout<< "Funcao I com x = 2\n" << evalf(2, funcaoi) << "\n";
-    cout<< "Derivada da funcao I com x = 2\n" << evalDf(2, funcaoi) << "\n";
-
-    return 0;
+    return;
 }
