@@ -5,6 +5,10 @@ using namespace std;
 /*  parte 1
     Método do ponto fixo para encontrar as 3 raízes da função
     f(x) = exp(x) - 2x^2
+    Funções g(x) utilizadas:
+    g1(x) = ln(2x^2)
+    g2(x) = +sqrt(e^x/2)
+    g3(x) = -sqrt(e^x/2)
 */
 
 //verifica se |xk+1 - xk| < E1
@@ -56,40 +60,49 @@ double iteracaogiii(double xk, double ei, double eii){
 }
 
 //recebe os valores dos erros e de x0 do usuário
-void recebe(double *ei, double *eii, double *xo, double *intervalo){
+void recebe(double *ei, double *eii, double *xoi, double *xoii, double intervaloi, double intervaloii){
     cout<< "Insira o E1 (erro 1):\n";
     cin>> *ei;
     cout<< "Insira o E2 (erro 2):\n";
     cin>> *eii;
-    cout<< "Insira o valor de x0 no intervalo x0 > " << *intervalo << ":\n";
-    cin>> *xo;
-    while(*xo < *intervalo){
-        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervalo << ":\n";
-        cin>> *xo;
+
+    cout<< "Insira o valor de x0 para a g(x) = ln(2x^2) no intervalo x0 > " << intervaloi << ":\n";
+    cin>> *xoi;
+    while(*xoi <= intervaloi){
+        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 > " << intervaloi << ":\n";
+        cin>> *xoi;
+    }
+    cout<< "Insira o valor de x0 para a g(x) = +- sqrt(e^x/2) no intervalo x0 < " << intervaloii << ":\n";
+    cin>> *xoii;
+    while(*xoii >= intervaloii){
+        cout<< "Valor de x0 incorreto. Por favor, insira x0 no intervalo x0 < " << intervaloii << ":\n";
+        cin>> *xoii;
     }
     return;
 }
 
 void partei(){
-    cout<< "Parte 1: Metodo de ponto fixo\nAlgoritmo que utiliza o metodo do ponto fixo para encontrar as 3 raizes da funcao f(x) = exp(x) - 2x^2.\n";
+    cout<< "Parte 1: Metodo de ponto fixo\nAlgoritmo que utiliza o metodo do ponto fixo para encontrar as 3 raizes da funcao f(x) = exp(x) - 2x^2.\n" << endl;
     double gi, gii, giii; 
     double ei, eii;
-    double xo;
-    //temos que calcular o intervalo para cada g(x)
-    double intervalo = 0.02; 
+    double xoi, xoii;
+    
+    double intervaloi = 2.0;        //intervalo encontrado para a g1(x)
+    double intervaloii = 2.079444;  //intervalo encontrado para a g2(x) e a g3(x)
 
-    recebe(&ei, &eii, &xo, &intervalo); //recebe parametros do usuario
+    recebe(&ei, &eii, &xoi, &xoii, intervaloi, intervaloii); //recebe parametros do usuario
 
     //iteração para achar xk
-    double resulti = iteracaogi(xo, ei, eii);
+    double resulti = iteracaogi(xoi, ei, eii);
     cout<< "raiz 1: " <<resulti << "\n";
-    double resultii = iteracaogii(xo, ei, eii);
+    double resultii = iteracaogii(xoii, ei, eii);
     cout<< "raiz 2: " <<resultii << "\n";
-    double resultiii = iteracaogiii(xo, ei, eii);
+    double resultiii = iteracaogiii(xoii, ei, eii);
     cout<< "raiz 3: " <<resultiii << "\n";
 }
 
-main(){
+int main(){
     partei();
+    return 0;
 }
 
