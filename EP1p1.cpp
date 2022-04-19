@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-/*  parte 1
+/*  Parte 1:
     Método do ponto fixo para encontrar as 3 raízes da função
     f(x) = exp(x) - 2x^2
     Funções g(x) utilizadas:

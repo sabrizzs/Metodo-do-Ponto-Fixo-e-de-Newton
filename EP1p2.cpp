@@ -1,11 +1,11 @@
 #include <iostream>
-#include <cmath> //biblioteca math
-#include <complex> //numeros complexos
-#include <stdio.h> //'fopen'
+#include <cmath>    //biblioteca math
+#include <complex>  //numeros complexos
+#include <stdio.h>  //'fopen'
 #include <stdlib.h> //'exit'
 using namespace std;
 
-/*  parte 2
+/*  Parte 2: 
     Método de Newton
     Algoritmo que gera uma imagem que ilustra as bacias de convergência de uma função.
 */
