@@ -56,55 +56,75 @@ bool newton(double xo, double tol, double it, fct_ptr funcao, double *raiz){
         k += 1;
         xo = x;
     }
-    cout<< "O metodo falhou apos "<< it << " iteracoes.\n";
+    cout<< "O metodo de Newton para achar uma raiz da função f falhou apos "<< it << " iteracoes.\n";
     return false;
+}
+
+void gnuplot(){
+    int x = 0, y = 0;
+    FILE *fp = NULL;
+    FILE *gnupipe = NULL;
+    char *gnuCommands[] = {"set title \"Bacias de convergencia\"", "plot 'pontos.txt'  using 1:2:(arg($3+$4*{0,1})) '(%lf,%lf) (%lf,%lf)' palette"};
+
+    fp = fopen("data.tmp", "w");
+    if(fp == NULL) {
+        perror ("Erro: ");
+        getchar();
+        exit (1);
+    }
+    gnupipe = popen("gnuplot -persistent", "w");
+
+    for (int i = 0; i < 11; i++){
+        fprintf(fp, "%d %d\n", x, y);
+        x++; y++;
+    }
+    fclose(fp);
+
+    for(int i = 0; i < 2; i++){
+        fprintf(gnupipe, "%s\n", gnuCommands[i]);
+    }
+
+    fclose(gnupipe);
+    return;
 }
 
 //acha as bacias de convergência da função f no domínio [l1, u1]x[l2, u2] e gera um arquivo output.txt que contém os dados para a geração da imagem das bacias
 void newton_basins(double l, double u, double p, fct_ptr funcao){
-    //cria o ponteiro
     FILE *pontos;
-    
-    //abre o arquivo para escritura, cada abertura o arquivo novo sobreescreve o antigo
-    pontos = fopen ( "pontos.dat", "w" );
-
-    //comprova se abriu
+    pontos = fopen ( "pontos.txt", "w" );
     if(pontos == NULL) {
-        perror ("Erro: ");//<- para comprocar é com perror e não com printf
+        perror ("Erro: "); //<- para comprocar é com perror e não com printf
         getchar();
         exit (1);
     }
 
     //newton para cada um dos pontos
     for(int y = 1; y <= p; y++){
-        double zy = y * (u - (-u))/(p-1) + (-u);
+        double zy = y * (u - (-u))/(p-1) + (-u);        //parte imaginaria
         for(int x = 1; x <= p; x++){
-            double zx = x * (l - (-l))/(p-1) + (-l);
-            std::complex<double> complex(zx, zy); //cria um numero complexo com zx e zy
+            double zx = x * (l - (-l))/(p-1) + (-l);    //parte real
+            std::complex<double> complex(zx, zy);       //cria um numero complexo com zx e zy
             double raiz;
-            newton(abs(complex), 1, 100000, funcao, &raiz); //calcula newton p/ o ponto
-            fprintf(pontos, "%f\n", raiz); //imprime no arquivo
+            newton(abs(complex), 0.0001, 1000, funcao, &raiz);      //calcula newton p/ o ponto
+            fprintf(pontos, "(%f,%f) (%f,%f)\n", zy, zx, zy, zx);   //imprime no arquivo
         }
     }
-    fclose(pontos); //fecha o arquivo
 
+    fclose(pontos);
+    gnuplot();
     return;
 }
 
 void parteii(){
-    //testes
-    cout<< "Funcao I com x = 2\n" << evalf(2, funcaoii) << "\n";
-    cout<< "Derivada da funcao I com x = 2\n" << evalDf(2, funcaoii) << "\n";
-    //testes com o metodo de newton
-    double raiz;
-    if(newton(2, 0.0001, 20, funcaoii, &raiz)) cout<< "Convergiu e a raiz eh: " << raiz << endl;
-    else cout<< "Nao convergiu\n";
-    cout<< "Teste de newton_basins\n";
-    newton_basins(1, 1, 4, funcaoii);
+    cout<< "Parte 2: Metodo de Newton\nAlgoritmo que gera uma imagem que ilustra as bacias de convergencia de uma funcao f.";
+    double l = 2, u = 2;    //domínio
+    double p = 100;         //pontos
+    //iniciar a função abaixo com o 4º argumento sendo umas das 3 funções: funcaoi, funcaoii ou funcaoiii                    
+    newton_basins(l, u, p, funcaoi);
     return;
 }
 
 int main(){
     parteii();
-    return 1;
+    return 0;
 }
