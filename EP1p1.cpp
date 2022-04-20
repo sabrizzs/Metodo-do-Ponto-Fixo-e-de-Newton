@@ -2,7 +2,10 @@
 #include <cmath>
 using namespace std;
 
-/*  Parte 1:
+/*  Ao executar o código colocar um argumento na linha de comando para exibir
+    os valores de xk até chegar na raiz da função. (ex: ./EP1 0)
+
+    Parte 1:
     Método do ponto fixo para encontrar as 3 raízes da função
     f(x) = exp(x) - 2x^2
     Funções g(x) utilizadas:
@@ -41,22 +44,25 @@ double giii(double x){
 }
 
 //funções recursivas para achar as raizes das funções g(x)
-double iteracaogi(double xk, double ei, double eii){
+double iteracaogi(double xk, double ei, double eii, bool print){
     double xki = gi(xk);
+    if(print) cout<< xki << endl;
     if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
-    return iteracaogi(xki, ei, eii);
+    return iteracaogi(xki, ei, eii, print);
 }
 
-double iteracaogii(double xk, double ei, double eii){
+double iteracaogii(double xk, double ei, double eii, bool print){
     double xki = gii(xk);
+    if(print) cout<< xki << endl;
     if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
-    return iteracaogii(xki, ei, eii);
+    return iteracaogii(xki, ei, eii, print);
 }
 
-double iteracaogiii(double xk, double ei, double eii){
+double iteracaogiii(double xk, double ei, double eii, bool print){
     double xki = giii(xk);
+    if(print) cout<< xki << endl;
     if(erroi(xki, xk, ei) || erroii(xki, eii)) return xki;
-    return iteracaogiii(xki, ei, eii);
+    return iteracaogiii(xki, ei, eii, print);
 }
 
 //recebe os valores dos erros e de x0 do usuário
@@ -81,7 +87,7 @@ void recebe(double *ei, double *eii, double *xoi, double *xoii, double intervalo
     return;
 }
 
-void partei(){
+void partei(bool print){
     cout<< "Parte 1: Metodo de ponto fixo\nAlgoritmo que utiliza o metodo do ponto fixo para encontrar as 3 raizes da funcao f(x) = exp(x) - 2x^2.\n" << endl;
     double gi, gii, giii; 
     double ei, eii;
@@ -93,16 +99,24 @@ void partei(){
     recebe(&ei, &eii, &xoi, &xoii, intervaloi, intervaloii); //recebe parametros do usuario
 
     //iteração para achar xk
-    double resulti = iteracaogi(xoi, ei, eii);
-    cout<< "raiz 1: " <<resulti << "\n";
-    double resultii = iteracaogii(xoii, ei, eii);
-    cout<< "raiz 2: " <<resultii << "\n";
-    double resultiii = iteracaogiii(xoii, ei, eii);
-    cout<< "raiz 3: " <<resultiii << "\n";
+    if(print) cout<< "Valores de x1...xk para a raiz 1:\n";
+    double resulti = iteracaogi(xoi, ei, eii, print);
+    cout<< "raiz 1: " <<resulti << endl;
+    if(print) cout<< "Valores de x1...xk para a raiz 2:\n";
+    double resultii = iteracaogii(xoii, ei, eii, print);
+    cout<< "raiz 2: " <<resultii << endl;
+    if(print) cout<< "Valores de x1...xk para a raiz 3:\n";
+    double resultiii = iteracaogiii(xoii, ei, eii, print);
+    cout<< "raiz 3: " <<resultiii << endl;
 }
 
-int main(){
-    partei();
+int main(int argc, char *argv[]){
+    bool print;
+    if(argc > 1){
+        print = true;
+    } else print = false;
+
+    partei(print);
     return 0;
 }
 
