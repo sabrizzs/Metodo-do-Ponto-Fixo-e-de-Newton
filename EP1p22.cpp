@@ -3,12 +3,15 @@
 #include <complex>  //numeros complexos
 #include <stdio.h>  //'fopen'
 #include <stdlib.h> //'exit'
+#include <graphics.h>
 using namespace std;
 
 /*  Parte 2: 
     Método de Newton
     Algoritmo que gera uma imagem que ilustra as bacias de convergência de uma função.
 */
+
+#define TAU 6.283185307
 
 //ponteiro para uma funcao double que aceita double e int como parametro
 typedef double (*fct_ptr)(double, int);
@@ -42,7 +45,6 @@ double evalDf(double x, fct_ptr funcao){
     return funcao(x, 1);
 }
 
-//https://sites.icmc.usp.br/andretta/ensino/aulas/sme0500-1-12/newton.pdf slide 7
 //aplica o método de Newton para achar uma raiz da função f (com primeira derivada f0), partindo do ponto x0.
 bool newton(double xo, double tol, double it, fct_ptr funcao, double *raiz){
     //xo = aproximacao inicial, tol = tolerancia, it = numero de iteracoes
@@ -98,6 +100,8 @@ void newton_basins(double l[], double u[], double pi, double pii, fct_ptr funcao
         exit (1);
     }
 
+    int shift = 5;
+
     for(int i = 0; i <= pi; i++){
         for(int j = 0; j <= pii; j++){
             double z;
@@ -108,9 +112,9 @@ void newton_basins(double l[], double u[], double pi, double pii, fct_ptr funcao
             std::complex<double> complex(u[0] + l[0], -u[1] + l[1]);
             newton(abs(complex), 0.000001, 100, funcao, &z);
 
-            fprintf(pontos, "%f    ", z.real);
-            fprintf(pontos, "%f \n", z.imag);
-            putpixel(u[0]/(4.0/600),u[1]/(4.0/600),1+int(shift+tol+(arg(z)*14/TAU+8))%14);
+            fprintf(pontos, "%d    ", z.real);
+            fprintf(pontos, "%d \n", z.imag);
+            putpixel(u[0]/(4.0/600),u[1]/(4.0/600),1+int(shift+100+(arg(z)*14/TAU+8))%14);
 
             fclose(pontos);
             gnuplot();
@@ -125,14 +129,18 @@ void parteii(){
     double l[2]; double u[2];    //domínio
     l[0] = -2; l[1] = 2;
     double pi = 500, pii = 500;   //pontos
+    
+    int gd,gm;
+    detectgraph(&gd,&gm);
+	initgraph(&gd,&gm,NULL);
+	delay(2000);
 
     //iniciar a função abaixo com o 4º argumento sendo umas das 3 funções: funcaoi, funcaoii ou funcaoiii                    
     newton_basins(l, u, pi, pii, funcaoii);
     return;
 }
 
-int main(int argc, char *argv[]){
-
+int main(){
 
     parteii();
     return 0;
